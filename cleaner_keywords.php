@@ -6,11 +6,12 @@
 #
 ###############################################################
 
-$filename = 'apk.txt'; //Имя файла для очистки. Файл должен быть в той же директории где и сам скрипт. Кодировка файла UTF-8
-$lang = 'ruen'; //Допустимые буквы: ru - русские; en - английские ; ruen - русские и английские
-$sym = '-.)($_,"!'.chr(39); //Допустимые символы. .chr(39) — это одинарная кавычка
-
-/* настройки выше, ниже ничего не трогать */
+set_time_limit(0);
+if(!empty($_POST['filename']) and !empty($_POST['language'])): ?>
+<?php 
+$filename = $_POST['filename']; //Имя файла для очистки. Файл должен быть в той же директории где и сам скрипт. Кодировка файла UTF-8
+$lang = $_POST['language']; //Допустимые буквы: ru - русские; en - английские ; ruen - русские и английские
+$sym = $_POST['symbols']; //Допустимые символы.
 
 for($i=0;$i<strlen($sym);$i++){
 	$sympattern .= '\\'.$sym[$i];
@@ -36,4 +37,16 @@ foreach ($keys as $key)
 }
 fclose($fgood); 
 fclose($fbad); 
-?>
+?> <?php else : ?>
+<html>
+<form method="POST" action="">
+Filename: <input type="text" name="filename" value=""><br>
+Language: <br>
+<input type="radio" name="language" value="ru"> Russian<br>
+<input type="radio" name="language" value="en"> English<br>
+<input type="radio" name="language" value="ruen"> Russian and English<br>
+Symbols: <input type="text" name="symbols" value="-.)($_,!'"><br>
+<input type="submit" value="START" name="B1">
+</form>
+</html>
+<?php endif; ?>
